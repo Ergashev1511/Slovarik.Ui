@@ -1,0 +1,160 @@
+:host {
+  display: block;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--tg-hint-color);
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tg-button-color);
+  color: var(--tg-button-text-color);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--tg-button-color);
+}
+
+.greeting {
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  color: var(--tg-hint-color);
+}
+
+.icon-btn {
+  background: var(--tg-secondary-bg-color);
+  border: none;
+  color: var(--tg-text-color);
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.stats-card {
+  background: var(--tg-secondary-bg-color);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.stats-title {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--tg-hint-color);
+  margin: 0 0 0.5rem;
+}
+
+.stats-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--tg-button-color);
+  margin-bottom: 1rem;
+}
+
+.stats-value span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--tg-text-color);
+}
+
+.progress-bar {
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--tg-button-color);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-label {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--tg-hint-color);
+}
+
+.card {
+  background: var(--tg-secondary-bg-color);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.action-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 8rem;
+}
+
+.action-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--tg-button-color);
+  border-radius: 50%;
+  margin-bottom: 0.75rem;
+}
+
+.action-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.action-card p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--tg-hint-color);
+}

@@ -1,0 +1,222 @@
+@if (loadingUser()) {
+  <div class="loading">Yuklanmoqda...</div>
+} @else if (errorUser()) {
+  <div class="error">{{ errorUser() }}</div>
+} @else {
+  @switch (view()) {
+    @case ('settings') {
+      <div class="settings-screen">
+        <header class="settings-header">
+          <button class="back-btn" (click)="goBack()" aria-label="Orqaga">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <h1 class="settings-title">Test Sozlamalari</h1>
+          <div class="user-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          </div>
+        </header>
+
+        <div class="banner">
+          <div class="banner-text">
+            <h2>Bilimingizni sinang</h2>
+            <p>Sozlamalarni o'zingizga moslang</p>
+          </div>
+        </div>
+
+        <section class="setting-section">
+          <h3 class="setting-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+            Savollar soni
+          </h3>
+          <div class="chip-group">
+            @for (opt of questionCountOptions; track opt.value) {
+              <button
+                class="chip"
+                [class.selected]="selectedCount() === opt.value"
+                (click)="selectCount(opt.value)"
+              >
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="setting-section">
+          <h3 class="setting-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg>
+            Savollar tartibi
+          </h3>
+          <div class="order-options">
+            @for (opt of orderOptions; track opt.value) {
+              <button
+                class="order-card"
+                [class.selected]="selectedOrder() === opt.value"
+                (click)="selectOrder(opt.value)"
+              >
+                <div class="order-info">
+                  <p class="order-title">{{ opt.label }}</p>
+                  <p class="order-desc">{{ opt.description }}</p>
+                </div>
+                <div class="order-icon">
+                  @if (opt.value === quizOrder.Recent) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 14 4 4-4 4"/><path d="m6 10-4-4 4-4"/><path d="M14.5 18H3"/><path d="M21 6H9.5"/></svg>
+                  }
+                </div>
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="setting-section">
+          <h3 class="setting-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            Tarjima yo'nalishi
+          </h3>
+          <div class="order-options">
+            @for (opt of directionOptions; track opt.value) {
+              <button
+                class="order-card"
+                [class.selected]="selectedDirection() === opt.value"
+                (click)="selectDirection(opt.value)"
+              >
+                <div class="order-info">
+                  <p class="order-title">{{ opt.label }}</p>
+                  <p class="order-desc">{{ opt.description }}</p>
+                </div>
+                <div class="order-icon">
+                  @if (opt.value === quizDirection.UzToRu) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                  } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 14 4 4-4 4"/><path d="m6 10-4-4 4-4"/><path d="M14.5 18H3"/><path d="M21 6H9.5"/></svg>
+                  }
+                </div>
+              </button>
+            }
+          </div>
+        </section>
+
+        <div class="info-card">
+          <div class="info-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          </div>
+          <p>Test yakunida noto'g'ri javoblar bo'yicha takrorlash imkoniyati beriladi.</p>
+        </div>
+
+        <button class="start-btn" (click)="startQuiz()">
+          Testni boshlash
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l14 7-14 7V5z"/></svg>
+        </button>
+      </div>
+    }
+
+    @case ('question') {
+      @if (currentQuestion(); as q) {
+        <div class="quiz-header">
+          <button class="close-btn" (click)="goBack()" aria-label="Yopish">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+          </button>
+          <span class="question-counter">{{ q.questionNumber }} / {{ q.totalQuestions }}</span>
+          <button class="more-btn" aria-label="Batafsil">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          </button>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-done" [style.width.%]="questionProgress()"></div>
+        </div>
+
+        <div class="question-card">
+          <span class="question-label">TARJIMANI TOPING</span>
+          <h2 class="question-text">{{ q.question }}</h2>
+        </div>
+
+        <div class="options">
+          @for (option of q.options; track option.id) {
+            <button
+              class="option-btn"
+              [class.correct]="showFeedback() && correctOptionId() === option.id"
+              [class.wrong]="showFeedback() && selectedOption() === option.id && !isAnswerCorrect()"
+              [disabled]="selectedOption() !== null"
+              (click)="answer(option.id)"
+            >
+              @if (showFeedback() && correctOptionId() === option.id) {
+                <span class="status-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              }
+              @if (showFeedback() && selectedOption() === option.id && !isAnswerCorrect()) {
+                <span class="status-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </span>
+              }
+              {{ option.text }}
+            </button>
+          }
+        </div>
+
+        @if (showFeedback()) {
+          @if (isAnswerCorrect()) {
+            <div class="feedback correct">To'g'ri javob!</div>
+          } @else {
+            <div class="feedback wrong">Noto'g'ri javob.</div>
+          }
+          <button class="primary-btn" (click)="next()">
+            {{ isLastQuestion() ? "Natijani ko'rish" : 'Keyingi savol' }}
+          </button>
+        }
+      }
+    }
+
+    @case ('result') {
+      @if (result(); as res) {
+        <div class="result-card">
+          <div class="circle-progress">
+            <svg width="160" height="160" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="10" />
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="var(--tg-button-color)"
+                stroke-width="10"
+                stroke-linecap="round"
+                [attr.stroke-dasharray]="326.7256"
+                [attr.stroke-dashoffset]="326.7256 - (326.7256 * progressPercent()) / 100"
+                transform="rotate(-90 60 60)"
+              />
+            </svg>
+            <div class="score-text">
+              <span>{{ res.score }}</span>
+              <span>/ {{ res.total }}</span>
+            </div>
+            <p class="score-label">NATIJA</p>
+          </div>
+
+          <h2 class="result-title">{{ resultMessage() }}</h2>
+          <p class="result-desc">
+            Siz {{ res.total }} ta so'zdan {{ res.score }} tasini to'g'ri topdingiz. Bilimingizni oshirishda davom eting!
+          </p>
+
+          <div class="result-stats">
+            <div class="stat-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span class="stat-label">Vaqt</span>
+              <span class="stat-value">—</span>
+            </div>
+            <div class="stat-box">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span class="stat-label">XP</span>
+              <span class="stat-value">+{{ res.score * 100 }} Ball</span>
+            </div>
+          </div>
+
+          <button class="primary-btn" (click)="goHome()">Asosiy sahifaga qaytish</button>
+          <button class="secondary-btn" (click)="restart()">Yana bir bor urinib ko&apos;rish</button>
+        </div>
+      }
+    }
+  }
+}

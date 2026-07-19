@@ -1,0 +1,154 @@
+:host {
+  display: block;
+}
+
+.page-header {
+  margin-bottom: 1.25rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--tg-hint-color);
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--tg-hint-color);
+}
+
+.upload-area {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  border: 2px dashed rgba(59, 130, 246, 0.35);
+  border-radius: 1.25rem;
+  color: var(--tg-text-color);
+  background: var(--tg-secondary-bg-color);
+  text-align: center;
+}
+
+.upload-label svg {
+  color: var(--tg-button-color);
+}
+
+.upload-title {
+  font-weight: 600;
+}
+
+.upload-hint {
+  font-size: 0.8rem;
+  color: var(--tg-hint-color);
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--tg-secondary-bg-color);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--tg-hint-color);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 1rem;
+  background: var(--tg-button-color);
+  color: var(--tg-button-text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.primary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.processing {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--tg-hint-color);
+}
+
+.error-message {
+  text-align: center;
+  margin-top: 1rem;
+  color: #ef4444;
+}
+
+.result {
+  margin-top: 1.5rem;
+}
+
+.result h3 {
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem;
+}
+
+.empty-result {
+  text-align: center;
+  color: var(--tg-hint-color);
+  padding: 1rem;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--tg-secondary-bg-color);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+.result-item .divider {
+  color: var(--tg-hint-color);
+}

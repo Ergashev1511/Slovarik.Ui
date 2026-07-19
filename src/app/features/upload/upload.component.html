@@ -1,0 +1,78 @@
+<header class="page-header">
+  <h1 class="page-title">So'z qo'shish</h1>
+  <p class="page-subtitle">Rasm yoki PDF yuklab, so'zlarni avtomatik ajrating</p>
+</header>
+
+@if (loadingUser()) {
+  <div class="loading">Yuklanmoqda...</div>
+} @else if (errorUser()) {
+  <div class="error">{{ errorUser() }}</div>
+} @else {
+  <div class="upload-area">
+    <input
+      type="file"
+      id="file"
+      accept=".pdf,image/*"
+      (change)="onFileSelected($event)"
+      class="file-input"
+    />
+    <label for="file" class="upload-label">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+      <span class="upload-title">Faylni tanlang</span>
+      <span class="upload-hint">PDF yoki rasm (maks. 10 MB)</span>
+    </label>
+  </div>
+
+  @if (selectedFile()) {
+    <div class="file-preview">
+      <span class="file-name">{{ selectedFile()?.name }}</span>
+      <button class="remove-btn" (click)="removeFile()" aria-label="O'chirish">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+      </button>
+    </div>
+  }
+
+  <button
+    class="primary-btn"
+    [disabled]="!selectedFile() || uploading()"
+    (click)="upload()"
+  >
+    @if (uploading()) {
+      <span>Yuklanmoqda...</span>
+    } @else {
+      <span>Yuklash</span>
+    }
+  </button>
+
+  @if (uploading()) {
+    <div class="processing">AI so'zlarni aniqlamoqda...</div>
+  }
+
+  @if (uploadError()) {
+    <div class="error-message">{{ uploadError() }}</div>
+  }
+
+  @if (result()) {
+    <div class="result">
+      @if (result()!.success) {
+        <h3>Topilgan so'zlar</h3>
+        @if (result()!.words.length === 0) {
+          <div class="empty-result">{{ result()!.message }}</div>
+        } @else {
+          <div class="result-list">
+            @for (word of result()!.words; track $index) {
+              <div class="result-item">
+                <span>{{ word.wordUz }}</span>
+                <span class="divider">—</span>
+                <span>{{ word.wordRu }}</span>
+              </div>
+            }
+          </div>
+          <button class="primary-btn" (click)="finish()">Saqlash</button>
+        }
+      } @else {
+        <div class="error-message">{{ result()!.message }}</div>
+      }
+    </div>
+  }
+}

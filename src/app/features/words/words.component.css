@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.page-header {
+  margin-bottom: 1.25rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--tg-hint-color);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--tg-secondary-bg-color);
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: var(--tg-hint-color);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--tg-text-color);
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: var(--tg-hint-color);
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--tg-hint-color);
+}
+
+.words-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.word-card {
+  background: var(--tg-secondary-bg-color);
+  border-radius: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.word-uz {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.word-ru {
+  font-size: 0.9rem;
+  color: var(--tg-hint-color);
+}

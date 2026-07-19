@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  height: 100dvh;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background-color: var(--tg-bg-color);
+  color: var(--tg-text-color);
+}
+
+.content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1rem;
+  padding-bottom: 5.5rem;
+}
