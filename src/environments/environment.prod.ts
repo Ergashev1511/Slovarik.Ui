@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://slovarik-api.onrender.com/api'
+  apiUrl: 'https://slovarik.onrender.com/api'
 };
