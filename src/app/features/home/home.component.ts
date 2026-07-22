@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const urlUserId = this.readUserIdFromUrl();
+    const urlUserId = 'd3c20784-92c8-4b45-bfc6-6461a041f61f' // this.readUserIdFromUrl();
     if (urlUserId) {
       this.loadUserById(urlUserId);
       return;
