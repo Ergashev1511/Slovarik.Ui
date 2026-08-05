@@ -105,6 +105,16 @@
   gap: 0.75rem;
 }
 
+.chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-wrap .chip {
+  padding: 0.5rem 1rem;
+}
+
 .chip {
   padding: 0.75rem 0.5rem;
   border-radius: 1rem;
@@ -121,6 +131,12 @@
   border-color: var(--tg-button-color);
   background: var(--tg-button-color);
   color: var(--tg-button-text-color);
+}
+
+.categories-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--tg-hint-color);
 }
 
 .order-options {
@@ -279,10 +295,18 @@
   color: var(--tg-hint-color);
 }
 
-.question-text {
-  margin: 0.75rem 0 0;
-  font-size: 1.5rem;
-  color: var(--tg-button-color);
+.question-prompt {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #60a5fa;
+  word-break: break-word;
+}
+
+.question-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--tg-hint-color);
 }
 
 .options {

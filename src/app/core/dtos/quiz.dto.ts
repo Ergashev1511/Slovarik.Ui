@@ -13,6 +13,7 @@ export interface QuizStartRequestDto {
   questionCount: number;
   direction: QuizDirection;
   selectFromEnd: boolean;
+  categoryId: string | null;
 }
 
 export interface QuizStartResponseDto {
