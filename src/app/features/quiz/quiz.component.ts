@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { TelegramService } from '../../core/services/telegram.service';
 import { UserService } from '../../core/services/user.service';
 import { QuizService } from '../../core/services/quiz.service';
+import { WordService } from '../../core/services/word.service';
 import { StorageService } from '../../core/services/storage.service';
+import { CategoryDto } from '../../core/dtos/category.dto';
 import {
   QuizDirection,
   QuizOrder,
@@ -30,6 +32,7 @@ export class QuizComponent implements OnInit {
   private readonly telegram = inject(TelegramService);
   private readonly userService = inject(UserService);
   private readonly quizService = inject(QuizService);
+  private readonly wordService = inject(WordService);
   private readonly storage = inject(StorageService);
   private readonly router = inject(Router);
 
@@ -61,6 +64,10 @@ export class QuizComponent implements OnInit {
   ];
   readonly selectedDirection = signal<QuizDirection>(QuizDirection.UzToRu);
 
+  readonly categories = signal<CategoryDto[]>([]);
+  readonly selectedCategoryId = signal<string | null>(null);
+  readonly categoriesLoading = signal(false);
+
   readonly session = signal<QuizSessionState | null>(null);
   readonly currentQuestion = signal<QuizQuestionDto | null>(null);
   readonly selectedOption = signal<number | null>(null);
@@ -91,6 +98,20 @@ export class QuizComponent implements OnInit {
     return ((session.currentQuestionIndex + 1) / session.questions.length) * 100;
   });
 
+  readonly questionPrompt = computed(() => {
+    const q = this.currentQuestion();
+    if (!q) return '';
+    const match = q.question.match(/^"(.+?)"/);
+    return match ? match[1] : q.question;
+  });
+
+  readonly questionHint = computed(() => {
+    const q = this.currentQuestion();
+    if (!q) return '';
+    const match = q.question.match(/so'zining (.+)$/);
+    return match ? match[1] : '';
+  });
+
   readonly isLastQuestion = computed(() => {
     const session = this.session();
     if (!session) return false;
@@ -107,6 +128,7 @@ export class QuizComponent implements OnInit {
       this.userId.set(urlUserId);
       this.storage.setString(USER_ID_KEY, urlUserId);
       this.loadingUser.set(false);
+      this.loadCategories(urlUserId);
       this.tryResume();
       return;
     }
@@ -115,6 +137,7 @@ export class QuizComponent implements OnInit {
     if (cached) {
       this.userId.set(cached);
       this.loadingUser.set(false);
+      this.loadCategories(cached);
       this.tryResume();
       return;
     }
@@ -131,11 +154,25 @@ export class QuizComponent implements OnInit {
         this.userId.set(u.id);
         this.storage.setString(USER_ID_KEY, u.id);
         this.loadingUser.set(false);
+        this.loadCategories(u.id);
         this.tryResume();
       },
       error: () => {
         this.loadingUser.set(false);
         this.errorUser.set('Foydalanuvchi ma\'lumotlari yuklanmadi.');
+      }
+    });
+  }
+
+  private loadCategories(userId: string): void {
+    this.categoriesLoading.set(true);
+    this.wordService.getCategoriesByUserId(userId).subscribe({
+      next: (cats) => {
+        this.categories.set(cats);
+        this.categoriesLoading.set(false);
+      },
+      error: () => {
+        this.categoriesLoading.set(false);
       }
     });
   }
@@ -186,6 +223,10 @@ export class QuizComponent implements OnInit {
     this.selectedDirection.set(direction);
   }
 
+  selectCategory(categoryId: string | null): void {
+    this.selectedCategoryId.set(categoryId);
+  }
+
   startQuiz(): void {
     const id = this.userId();
     if (!id) return;
@@ -194,7 +235,8 @@ export class QuizComponent implements OnInit {
       userId: id,
       questionCount: this.selectedCount(),
       direction: this.selectedDirection(),
-      selectFromEnd: this.selectedOrder() === QuizOrder.Recent
+      selectFromEnd: this.selectedOrder() === QuizOrder.Recent,
+      categoryId: this.selectedCategoryId()
     };
 
     this.quizService.startQuiz(request).subscribe({

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
 import { UploadResultDto, WordDto } from '../dtos/word.dto';
+import { CategoryDto } from '../dtos/category.dto';
 
 @Injectable({ providedIn: 'root' })
 export class WordService {
@@ -16,5 +17,9 @@ export class WordService {
     formData.append('userId', userId);
     formData.append('file', file);
     return this.http.postMultipart<UploadResultDto>('words/upload', formData);
+  }
+
+  getCategoriesByUserId(userId: string): Observable<CategoryDto[]> {
+    return this.http.get<CategoryDto[]>(`categories/by-user/${userId}`);
   }
 }
