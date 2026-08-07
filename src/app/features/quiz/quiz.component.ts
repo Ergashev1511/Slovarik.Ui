@@ -67,6 +67,13 @@ export class QuizComponent implements OnInit {
   readonly categories = signal<CategoryDto[]>([]);
   readonly selectedCategoryId = signal<string | null>(null);
   readonly categoriesLoading = signal(false);
+  readonly categoryDropdownOpen = signal(false);
+
+  readonly selectedCategoryName = computed(() => {
+    const id = this.selectedCategoryId();
+    if (!id) return 'Hammasi';
+    return this.categories().find(c => c.id === id)?.name ?? 'Hammasi';
+  });
 
   readonly session = signal<QuizSessionState | null>(null);
   readonly currentQuestion = signal<QuizQuestionDto | null>(null);
@@ -225,6 +232,11 @@ export class QuizComponent implements OnInit {
 
   selectCategory(categoryId: string | null): void {
     this.selectedCategoryId.set(categoryId);
+    this.categoryDropdownOpen.set(false);
+  }
+
+  toggleCategoryDropdown(): void {
+    this.categoryDropdownOpen.update(v => !v);
   }
 
   startQuiz(): void {
