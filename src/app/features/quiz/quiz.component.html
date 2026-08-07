@@ -107,24 +107,16 @@
           } @else if (categories().length === 0) {
             <p class="categories-hint">Kategoriyalar mavjud emas</p>
           } @else {
-            <div class="chip-wrap">
-              <button
-                class="chip"
-                [class.selected]="selectedCategoryId() === null"
-                (click)="selectCategory(null)"
-              >
-                Hammasi
-              </button>
+            <select
+              class="select-dropdown"
+              [value]="selectedCategoryId() ?? ''"
+              (change)="selectCategory($any($event.target).value || null)"
+            >
+              <option value="">Hammasi</option>
               @for (cat of categories(); track cat.id) {
-                <button
-                  class="chip"
-                  [class.selected]="selectedCategoryId() === cat.id"
-                  (click)="selectCategory(cat.id)"
-                >
-                  {{ cat.name }}
-                </button>
+                <option [value]="cat.id">{{ cat.name }}</option>
               }
-            </div>
+            </select>
           }
         </section>
 
