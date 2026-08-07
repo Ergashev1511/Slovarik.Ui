@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { TelegramService } from '../../core/services/telegram.service';
 import { UserService } from '../../core/services/user.service';
@@ -34,6 +34,13 @@ export class UploadComponent implements OnInit {
   readonly categories = signal<CategoryDto[]>([]);
   readonly selectedCategoryId = signal<string | null>(null);
   readonly categoriesLoading = signal(false);
+  readonly categoryDropdownOpen = signal(false);
+
+  readonly selectedCategoryName = computed(() => {
+    const id = this.selectedCategoryId();
+    if (!id) return 'Hammasi';
+    return this.categories().find(c => c.id === id)?.name ?? 'Hammasi';
+  });
 
   ngOnInit(): void {
     const urlUserId = this.readUserIdFromUrl();
@@ -94,6 +101,11 @@ export class UploadComponent implements OnInit {
 
   selectCategory(categoryId: string | null): void {
     this.selectedCategoryId.set(categoryId);
+    this.categoryDropdownOpen.set(false);
+  }
+
+  toggleCategoryDropdown(): void {
+    this.categoryDropdownOpen.update(v => !v);
   }
 
   onFileSelected(event: Event): void {
