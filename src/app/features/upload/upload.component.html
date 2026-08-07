@@ -8,6 +8,25 @@
 } @else if (errorUser()) {
   <div class="error">{{ errorUser() }}</div>
 } @else {
+  <div class="category-section">
+    <label class="field-label" for="category">Kategoriya</label>
+    @if (categoriesLoading()) {
+      <p class="field-hint">Yuklanmoqda...</p>
+    } @else {
+      <select
+        id="category"
+        class="select-dropdown"
+        [value]="selectedCategoryId() ?? ''"
+        (change)="selectCategory($any($event.target).value || null)"
+      >
+        <option value="">Hammasi</option>
+        @for (cat of categories(); track cat.id) {
+          <option [value]="cat.id">{{ cat.name }}</option>
+        }
+      </select>
+    }
+  </div>
+
   <div class="upload-area">
     <input
       type="file"

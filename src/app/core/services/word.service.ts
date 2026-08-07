@@ -12,9 +12,12 @@ export class WordService {
     return this.http.get<WordDto[]>(`words/${userId}`);
   }
 
-  upload(userId: string, file: File): Observable<UploadResultDto> {
+  upload(userId: string, file: File, categoryId: string | null): Observable<UploadResultDto> {
     const formData = new FormData();
     formData.append('userId', userId);
+    if (categoryId) {
+      formData.append('categoryId', categoryId);
+    }
     formData.append('file', file);
     return this.http.postMultipart<UploadResultDto>('words/upload', formData);
   }

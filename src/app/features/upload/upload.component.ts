@@ -5,6 +5,7 @@ import { UserService } from '../../core/services/user.service';
 import { WordService } from '../../core/services/word.service';
 import { StorageService } from '../../core/services/storage.service';
 import { UploadResultDto, WordPairDto } from '../../core/dtos/word.dto';
+import { CategoryDto } from '../../core/dtos/category.dto';
 
 const USER_ID_KEY = 'slovarik_user_id';
 
@@ -30,12 +31,17 @@ export class UploadComponent implements OnInit {
   readonly uploadError = signal<string | null>(null);
   readonly result = signal<UploadResultDto | null>(null);
 
+  readonly categories = signal<CategoryDto[]>([]);
+  readonly selectedCategoryId = signal<string | null>(null);
+  readonly categoriesLoading = signal(false);
+
   ngOnInit(): void {
     const urlUserId = this.readUserIdFromUrl();
     if (urlUserId) {
       this.userId.set(urlUserId);
       this.storage.setString(USER_ID_KEY, urlUserId);
       this.loadingUser.set(false);
+      this.loadCategories(urlUserId);
       return;
     }
 
@@ -43,6 +49,7 @@ export class UploadComponent implements OnInit {
     if (cached) {
       this.userId.set(cached);
       this.loadingUser.set(false);
+      this.loadCategories(cached);
       return;
     }
 
@@ -58,6 +65,7 @@ export class UploadComponent implements OnInit {
         this.userId.set(u.id);
         this.storage.setString(USER_ID_KEY, u.id);
         this.loadingUser.set(false);
+        this.loadCategories(u.id);
       },
       error: () => {
         this.loadingUser.set(false);
@@ -69,6 +77,23 @@ export class UploadComponent implements OnInit {
   private readUserIdFromUrl(): string | null {
     if (typeof window === 'undefined') return null;
     return new URLSearchParams(window.location.search).get('userId');
+  }
+
+  private loadCategories(userId: string): void {
+    this.categoriesLoading.set(true);
+    this.wordService.getCategoriesByUserId(userId).subscribe({
+      next: (cats) => {
+        this.categories.set(cats);
+        this.categoriesLoading.set(false);
+      },
+      error: () => {
+        this.categoriesLoading.set(false);
+      }
+    });
+  }
+
+  selectCategory(categoryId: string | null): void {
+    this.selectedCategoryId.set(categoryId);
   }
 
   onFileSelected(event: Event): void {
@@ -88,7 +113,7 @@ export class UploadComponent implements OnInit {
     this.uploadError.set(null);
     this.result.set(null);
 
-    this.wordService.upload(id, file).subscribe({
+    this.wordService.upload(id, file, this.selectedCategoryId()).subscribe({
       next: (res) => {
         this.result.set(res);
         this.uploading.set(false);
