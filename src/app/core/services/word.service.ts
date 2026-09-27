@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from './http.service';
-import { UploadResultDto, WordDto } from '../dtos/word.dto';
+import { BatchInsertRequestDto, BatchInsertResultDto, WordDto } from '../dtos/word.dto';
 import { CategoryDto } from '../dtos/category.dto';
 
 @Injectable({ providedIn: 'root' })
@@ -12,17 +12,22 @@ export class WordService {
     return this.http.get<WordDto[]>(`words/${userId}`);
   }
 
-  upload(userId: string, file: File, categoryId: string | null): Observable<UploadResultDto> {
-    const formData = new FormData();
-    formData.append('userId', userId);
-    if (categoryId) {
-      formData.append('categoryId', categoryId);
-    }
-    formData.append('file', file);
-    return this.http.postMultipart<UploadResultDto>('words/upload', formData);
+  batchInsert(request: BatchInsertRequestDto): Observable<BatchInsertResultDto> {
+    return this.http.post<BatchInsertResultDto>('words/batch', request);
   }
 
   getCategoriesByUserId(userId: string): Observable<CategoryDto[]> {
     return this.http.get<CategoryDto[]>(`categories/by-user/${userId}`);
   }
+
+  // Legacy: AI-based file upload — kept for future reactivation
+  // upload(userId: string, file: File, categoryId: string | null): Observable<UploadResultDto> {
+  //   const formData = new FormData();
+  //   formData.append('userId', userId);
+  //   if (categoryId) {
+  //     formData.append('categoryId', categoryId);
+  //   }
+  //   formData.append('file', file);
+  //   return this.http.postMultipart<UploadResultDto>('words/upload', formData);
+  // }
 }
